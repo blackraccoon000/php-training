@@ -1,0 +1,36 @@
+Arguments: 
+  /Users/yutakaf/.nodebrew/node/v16.0.0/bin/node /Users/yutakaf/.nodebrew/current/bin/yarn init
+
+PATH: 
+  /Users/yutakaf/.zplug/repos/zplug/zplug/bin:/Users/yutakaf/.zplug/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/yutakaf/.zplug:/Users/yutakaf/.nodebrew/current/bin
+
+Yarn version: 
+  1.22.11
+
+Node version: 
+  16.0.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/Users/yutakaf/.nodebrew/node/v16.0.0/lib/node_modules/yarn/lib/cli.js:137023:13)
+      at Interface.emit (node:events:365:28)
+      at Interface._ttyWrite (node:readline:1007:16)
+      at ReadStream.onkeypress (node:readline:271:10)
+      at ReadStream.emit (node:events:365:28)
+      at emitKeys (node:internal/readline/utils:358:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (node:readline:1281:36)
+      at ReadStream.emit (node:events:365:28)
+      at addChunk (node:internal/streams/readable:314:12)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
