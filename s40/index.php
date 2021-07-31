@@ -57,19 +57,26 @@ $html = '<!DOCTYPE html>
 </body>
 </html>';
 
-// for ($i = 1; $i < 7; $i++) {
-//     if (preg_match("/<h$i>(.{1,})<\/h$i>/", $html, $result)) {
-//         echo "<p>$result[1] OK</p>";
-//         // var_dump($result);
-//     } else {
-//         echo '<p>NG</p>';
-//     }
-// }
+echo '<h3>use preg_match</h3>';
+
+for ($i = 1; $i < 7; $i++) {
+    if (preg_match("/<h$i>(.{1,})<\/h$i>/", $html, $result)) {
+        echo "<p>$result[1] OK</p>";
+        // var_dump($result);
+    } else {
+        echo '<p>NG</p>';
+    }
+}
+
+echo '<h3>use preg_match_all</h3>';
+echo '<p>何か変 $aryの型がstringになる。</p>';
 
 if (preg_match_all('/<h[1-6]>(.+)<\/h[1-6]>/', $html, $result)) {
-    // echo "<p>$result[0][0] OK</p>";
-    // var_dump($result);
-    print_r($result[count($result) - 1]);
+    // print_r($result[count($result) - 1]);
+    $ary = $result[count($result) - 1];
+    foreach ($ary as $key => $value) {
+        echo "<p>$value[$key] OK</p>";
+    }
 } else {
     echo '<p>NG</p>';
 }
