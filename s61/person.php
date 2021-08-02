@@ -14,7 +14,7 @@ abstract class Person
     }
 
     abstract public function hello(): self;
-    static function bye()
+    static function bye(): void
     {
         echo 'bye';
     }

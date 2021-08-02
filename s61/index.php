@@ -8,11 +8,11 @@ function add1(int $val)
     return $val + 1;
 }
 $result = add1(1);
-var_dump($result);
+// var_dump($result);
 
 require_once 'person.php';
-use animal\Person;
-use animal\Japanese;
+// use animal\Person;
+// use animal\Japanese;
 
 function callHelloMethod(Person $person): void
 {
