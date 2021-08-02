@@ -22,8 +22,8 @@ if ($setTypeCreate && $setTask) {
     $_SESSION['todos'][$_POST['id']] = $_POST['task'];
     echo "タスクが[{$_POST['task']}]に変更されました。";
 } elseif ($setTypeDelete) {
-    // array_splice($_SESSION['todos'], $_POST['id'], 1);
-    unset($_SESSION['todos'][$_POST['id']]);
+    array_splice($_SESSION['todos'], $_POST['id'], 1);
+    // unset($_SESSION['todos'][$_POST['id']]);
     echo "タスク[{$_POST['task']}]が削除されました。";
 } elseif (!$setTask) {
     echo '<h4>タスクを入力しましょう</h4>';
