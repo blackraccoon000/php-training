@@ -69,13 +69,12 @@ for ($i = 1; $i < 7; $i++) {
 }
 
 echo '<h3>use preg_match_all</h3>';
-echo '<p>何か変 $aryの型がstringになる。</p>';
 
 if (preg_match_all('/<h[1-6]>(.+)<\/h[1-6]>/', $html, $result)) {
     // print_r($result[count($result) - 1]);
     $ary = $result[count($result) - 1];
     foreach ($ary as $key => $value) {
-        echo "<p>$value[$key] OK</p>";
+        echo "<p>{$key} {$value} OK</p>";
     }
 } else {
     echo '<p>NG</p>';
