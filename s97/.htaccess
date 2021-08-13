@@ -1,0 +1,51 @@
+RewriteEngine On
+RewriteBase /s97
+# RewriteRule imgs/150.jpg imgs/150.png
+# RewriteRule sub1/ sub2/
+
+# RewriteCond %{HTTP_HOST} ^127.0.0.1
+# RewriteRule .? - [F]
+# RewriteRule sub1/(.+\.php) sub2/$1
+# RewriteRule imgs/(.+).jpg imgs/$1.png
+
+# RewriteCond %{QUERY_STRING} p=(.+)&?
+# RewriteRule sub1 sub2/%1?
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule sub2/(.+) sub1/$1
+
+# RewriteRule /?(.+).html$ $1.php [R]
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule sub2/(.+) sub1/$1 [R]
+# AddType image/webp  .webp
+
+# RewriteCond %{HTTP_ACCEPT} image/webp
+# RewriteCond /Applications/MAMP/htdocs/php-training/s97/imgs/$1.webp -f
+# RewriteRule imgs/(.+).(jpg?g|png) imgs/$1.webp
+
+# RewriteCond %{HTTP_HOST} ^www\.localhost
+# RewriteRule (.+) http://vhost.local:8888/s97/$1 [R]
+
+# <IfModule mod_deflate.c>
+#   AddOutputFilterByType DEFLATE text/html text/plain text/css
+# </IfModule>
+
+# INode、更新日時、ファイルサイズを使用
+# FileETag All
+# FileETag INode MTime Sizefault
+
+# ETagなし
+# FileETag None
+
+# 更新日時、ファイルサイズのみ使用
+# FileETag MTime Size
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  <FilesMatch "\.(png|jpe?g|gif|css|js|html)$">
+    # ExpiresDefault "access plus 2 week"
+    ExpiresDefault "access plus 6 months"
+  </FilesMatch>
+</IfModule>

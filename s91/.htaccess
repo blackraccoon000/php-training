@@ -1,0 +1,14 @@
+# DirectoryIndex index.html
+# Options +Indexes
+# Redirect 302 /php-training/s91/redirect-test /php-training/s91/
+# Redirect 302 /php-training/s91/redirect-test1 /php-training/s91
+# Redirect 302 /php-training/s91/Parent1 /php-training/s91/Parent1/Child1/
+# Redirect 302 /php-training/s91/google https://www.google.com/
+
+RewriteEngine On
+
+# RewriteRule Parent1/index.php /s91/Parent1/tmp.php [R]
+# RewriteRule Parent1/index.php /s91/Parent1/tmp.php [R=301]
+# RewriteRule Parent1/index.php /s91/Parent1/tmp.php [R=302]
+# RewriteRule Parent1/index.php https://localhost:8888/
+RewriteRule Parent1/index.php - [F]

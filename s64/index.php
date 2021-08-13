@@ -12,11 +12,14 @@ require_once dirname(__FILE__) . '/../s62/index.php';
 
 class LogWriter extends MyFileWriter
 {
-    public $time_str = date('Y-m-d H:i:s');
+    protected function getDate()
+    {
+        return date('Y-m-d H:i:s');
+    }
     protected function format($message)
     {
         // $time = date('Y-m-d H:i:s');
-        return sprintf('%s %s', $this->time_str, $message);
+        return sprintf('%s %s', $this->getDate(), $message);
     }
 }
 
