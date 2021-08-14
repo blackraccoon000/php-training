@@ -1,5 +1,7 @@
 <?php
 namespace controllers\login;
+use libs\Auth;
+use libs\Helper;
 
 function get()
 {
@@ -8,7 +10,15 @@ function get()
 
 function post()
 {
-    echo '<p>POSTが呼ばれました(login)</p>';
+    $id = Helper::get_param('id', '');
+    $pwd = Helper::get_param('pwd', '');
+
+    if (Auth::signIn($id, $pwd)) {
+        echo '認証成功';
+    } else {
+        echo '認証失敗';
+    }
+    // echo '<p>POSTが呼ばれました(login)</p>';
 }
 
 require_once SOURCE_BASE . 'partials/link.php';

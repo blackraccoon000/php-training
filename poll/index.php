@@ -1,5 +1,20 @@
 <?php
 require_once 'config.php';
+
+// libraryの読み込み
+require_once SOURCE_BASE . 'libs/helper.php';
+require_once SOURCE_BASE . 'libs/auth.php';
+
+// modelの読み込み
+require_once SOURCE_BASE . 'models/user.model.php';
+
+// dbとの接続
+require_once SOURCE_BASE . 'db/data_source.php';
+require_once SOURCE_BASE . 'db/user.query.php';
+
+// session_startを呼び出す modelの前だとerror
+session_start();
+
 require_once SOURCE_BASE . 'partials/header.php';
 
 $rPath = str_replace(BASE_CONTEXT_PATH, '', $_SERVER['REQUEST_URI']);
