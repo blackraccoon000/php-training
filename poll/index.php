@@ -6,7 +6,11 @@ require_once SOURCE_BASE . 'libs/helper.php';
 require_once SOURCE_BASE . 'libs/auth.php';
 
 // modelの読み込み
+require_once SOURCE_BASE . 'models/abstract.model.php';
 require_once SOURCE_BASE . 'models/user.model.php';
+
+// messageの読み込み + models/abstract.model.phpが必要
+require_once SOURCE_BASE . 'libs/message.php';
 
 // dbとの接続
 require_once SOURCE_BASE . 'db/data_source.php';

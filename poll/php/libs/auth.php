@@ -1,6 +1,7 @@
 <?php
 namespace libs;
 use db\UserQuery;
+use models\UserModel;
 
 class Auth
 {
@@ -19,7 +20,8 @@ class Auth
                  * セッションに情報を格納
                  * /Applications/MAMP/tmp/phpにファイルが格納される。
                  */
-                $_SESSION['user'] = $user;
+                // $_SESSION['user'] = $user;
+                UserModel::setSession($user);
             } else {
                 echo 'パスワードが一致しません';
             }
@@ -53,6 +55,17 @@ class Auth
         }
 
         return $is_success;
+    }
+
+    public static function isLogin()
+    {
+        $user = UserModel::getSession();
+
+        if (isset($user)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 ?>

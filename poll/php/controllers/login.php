@@ -2,6 +2,7 @@
 namespace controllers\login;
 use libs\Auth;
 use libs\Helper;
+use libs\Msg;
 
 function get()
 {
@@ -13,12 +14,15 @@ function post()
     $id = Helper::get_param('id', '');
     $pwd = Helper::get_param('pwd', '');
 
+    Msg::push(Msg::DEBUG, 'デバックメッセージです。');
+
     if (Auth::signIn($id, $pwd)) {
-        echo '認証成功';
+        Msg::push(Msg::INFO, '認証成功');
+        Helper::redirect(GO_HOME);
     } else {
-        echo '認証失敗';
+        Msg::push(Msg::ERROR, '認証失敗');
+        Helper::redirect(GO_REFERER);
     }
-    // echo '<p>POSTが呼ばれました(login)</p>';
 }
 
 require_once SOURCE_BASE . 'partials/link.php';

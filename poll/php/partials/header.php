@@ -8,3 +8,17 @@
   <link rel="stylesheet" type="text/css" href="<?php echo BASE_CSS_PATH; ?>index.css">
 </head>
 <body>
+<?php
+use libs\Auth;
+use libs\Msg;
+
+Msg::flush();
+
+if (Auth::isLogin()) {
+    echo '<p>ログイン中です。</p>';
+} else {
+    echo '<p>ログインしていません。</p>';
+}
+
+
+?>

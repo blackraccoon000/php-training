@@ -15,4 +15,17 @@ define('BASE_CSS_PATH', BASE_CONTEXT_PATH . 'css/');
  * baseurl+/php/ -> poll/php/までのpath
  */
 define('SOURCE_BASE', __DIR__ . '/php/');
+
+/**
+ * link定数
+ */
+define('GO_HOME', 'home');
+define('GO_REFERER', 'referer');
+
+/**
+ * DEBUG定数
+ * true 有効 / false 無効
+ */
+define('DEBUG', false);
+
 ?>
