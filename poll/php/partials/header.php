@@ -14,8 +14,8 @@ use libs\Msg;
 
 Msg::flush();
 
-if (Auth::isLogin()) {
-    echo '<p>ログイン中です。</p>';
+if (Auth::isSignIn()) {
+    echo '<p>ログイン中です。</p><a href="/poll/logout">logout</a>';
 } else {
     echo '<p>ログインしていません。</p>';
 }

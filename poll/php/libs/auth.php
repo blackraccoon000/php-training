@@ -8,25 +8,32 @@ class Auth
     /**
      * ユーザ認証に関する関数
      */
-    public static function signIn($id, $pwd)
+    public static function signIn(UserModel $user)
     {
-        $is_success = false;
-        $user = UserQuery::fetchById($id);
-
-        if (!empty($user) && $user->del_flg !== 1) {
-            if (password_verify($pwd, $user->pwd)) {
-                $is_success = true;
-                /**
-                 * セッションに情報を格納
-                 * /Applications/MAMP/tmp/phpにファイルが格納される。
-                 */
-                // $_SESSION['user'] = $user;
-                UserModel::setSession($user);
-            } else {
-                echo 'パスワードが一致しません';
+        try {
+            if (!($user->isValidId() * $user->isValidPwd())) {
+                return false;
             }
-        } else {
-            echo 'ユーザが見つかりません';
+            $is_success = false;
+            $fetchUser = UserQuery::fetchById($user->id);
+
+            if (!empty($fetchUser) && $fetchUser->del_flg !== 1) {
+                if (password_verify($user->pwd, $fetchUser->pwd)) {
+                    $is_success = true;
+                    UserModel::setSession($fetchUser);
+                } else {
+                    echo 'パスワードが一致しません';
+                }
+            } else {
+                echo 'ユーザが見つかりません';
+            }
+        } catch (\Throwable $th) {
+            $is_success = false;
+            Msg::push(Msg::DEBUG, $th->getMessage());
+            Msg::push(
+                Msg::ERROR,
+                'サインイン処理に問題が発生しました。少し時間をおいてから再度お試しください'
+            );
         }
         return $is_success;
     }
@@ -36,36 +43,74 @@ class Auth
      */
     public static function regist($user)
     {
-        $is_success = false;
+        try {
+            if (
+                !(
+                    $user->isValidId() *
+                    $user->isValidPwd() *
+                    $user->isValidNickname()
+                )
+            ) {
+                return false;
+            }
+            $is_success = false;
 
-        /**
-         * 既に登録されているIDでないことを確認する。
-         */
-        $exist_user = UserQuery::fetchById($user->id);
+            /**
+             * 既に登録されているIDでないことを確認する。
+             */
+            $exist_user = UserQuery::fetchById($user->id);
 
-        if (!empty($exist_user)) {
-            echo 'ユーザが既に存在しています';
-            return $is_success;
+            if (!empty($exist_user)) {
+                echo 'ユーザが既に存在しています';
+                return $is_success;
+            }
+
+            $is_success = UserQuery::insert($user);
+
+            if ($is_success) {
+                $_SESSION['user'] = $user;
+            }
+        } catch (\Throwable $th) {
+            $is_success = false;
+            Msg::push(Msg::DEBUG, $th->getMessage());
+            Msg::push(
+                Msg::ERROR,
+                'ユーザ登録作業に問題が発生しました。少し時間をおいてから再度お試しください'
+            );
         }
-
-        $is_success = UserQuery::insert($user);
-
-        if ($is_success) {
-            $_SESSION['user'] = $user;
-        }
-
         return $is_success;
     }
 
-    public static function isLogin()
+    public static function isSignIn()
     {
-        $user = UserModel::getSession();
-
+        try {
+            $user = UserModel::getSession();
+        } catch (\Throwable $th) {
+            UserModel::clearSession();
+            Msg::push(Msg::DEBUG, $th->getMessage());
+            Msg::push(
+                Msg::ERROR,
+                'エラーが発生しました。再度ログインを行ってください'
+            );
+            return false;
+        }
         if (isset($user)) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public static function signOut()
+    {
+        try {
+            UserModel::clearSession();
+        } catch (\Throwable $th) {
+            UserModel::clearSession();
+            Msg::push(Msg::DEBUG, $th->getMessage());
+            return false;
+        }
+        return true;
     }
 }
 ?>

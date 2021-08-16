@@ -4,6 +4,7 @@ require_once 'config.php';
 // libraryの読み込み
 require_once SOURCE_BASE . 'libs/helper.php';
 require_once SOURCE_BASE . 'libs/auth.php';
+require_once SOURCE_BASE . 'libs/router.php';
 
 // modelの読み込み
 require_once SOURCE_BASE . 'models/abstract.model.php';
@@ -19,30 +20,17 @@ require_once SOURCE_BASE . 'db/user.query.php';
 // session_startを呼び出す modelの前だとerror
 session_start();
 
-require_once SOURCE_BASE . 'partials/header.php';
+try {
+    require_once SOURCE_BASE . 'partials/header.php';
 
-$rPath = str_replace(BASE_CONTEXT_PATH, '', $_SERVER['REQUEST_URI']);
-$method = strtolower($_SERVER['REQUEST_METHOD']);
+    $rPath = str_replace(BASE_CONTEXT_PATH, '', $_SERVER['REQUEST_URI']);
+    $method = strtolower($_SERVER['REQUEST_METHOD']);
 
-route($rPath, $method);
+    libs\route($rPath, $method);
 
-function route($rPath, $method)
-{
-    if ($rPath === '') {
-        $rPath = 'home';
-    }
-    $targetFile = SOURCE_BASE . "controllers/{$rPath}.php";
-
-    if (!file_exists($targetFile)) {
-        require_once SOURCE_BASE . 'views/404.php';
-        return;
-    }
-
-    require_once $targetFile;
-    $fn = "\\controllers\\{$rPath}\\{$method}";
-    $fn();
+    require_once SOURCE_BASE . 'partials/footer.php';
+} catch (\Throwable $th) {
+    die('<h1>致命的なエラーです。</h1><p>サーバ管理者へ連絡ください</p>');
 }
-
-require_once SOURCE_BASE . 'partials/footer.php';
 
 ?>

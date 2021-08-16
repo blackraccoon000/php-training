@@ -1,7 +1,6 @@
 <?php
 namespace libs;
 use models\AbstractModel;
-
 /**
  * MessageをSession情報として格納/表示するクラス
  */
@@ -36,15 +35,20 @@ class Msg extends AbstractModel
 
     public static function flush()
     {
-        $msg_with_type = static::getSessionAndFlush() ?? [];
-        foreach ($msg_with_type as $type => $msgs) {
-            if ($type === static::DEBUG && !DEBUG) {
-                continue; // 次のループを処理する
-            }
+        try {
+            $msg_with_type = static::getSessionAndFlush() ?? [];
+            foreach ($msg_with_type as $type => $msgs) {
+                if ($type === static::DEBUG && !DEBUG) {
+                    continue; // 次のループを処理する
+                }
 
-            foreach ($msgs as $msg) {
-                echo "<div>{$type}:{$msg}</div>";
+                foreach ($msgs as $msg) {
+                    echo "<div>{$type}:{$msg}</div>";
+                }
             }
+        } catch (\Throwable $th) {
+            Msg::push(Msg::DEBUG, $th->getMessage());
+            Msg::push(Msg::ERROR, 'Msg::Flushで例外が発生しました。');
         }
     }
 }
